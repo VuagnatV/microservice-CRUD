@@ -22,8 +22,11 @@ app.get('/books/:id', async (req, res) => {
     const book = books.find(book => book.id === id)
     if (book) {
         try {
-            const authorResponse = await axios.get(`http://localhost:4000/authors/${book.authorId}`)
-            const categoryResponse = await axios.get(`http://localhost:5000/categories/${book.categoryId}`)
+
+            //const categoryResponse = await axios.get(`http://192.168.1.10:5000/categories/${book.categoryId}`)
+            //const authorResponse = await axios.get(`http://192.168.1.10:6000/authors/${book.authorId}`)
+            const categoryResponse = await axios.get(`http://categories:5000/categories/${book.categoryId}`)
+            const authorResponse = await axios.get(`http://authors:6000/authors/${book.authorId}`)
             const author = authorResponse.data
             const category = categoryResponse.data
 
@@ -37,7 +40,7 @@ app.get('/books/:id', async (req, res) => {
             res.json(bookDetails)
 
         } catch (error) {
-            res.status(500).json({ error: "dsfsd" })
+            res.status(500).json({ error })
         }
     } else {
         res.status(500).json({ error: "dsfffffsd" })
@@ -76,7 +79,7 @@ app.put('/books/:id', async (req, res) => {
             res.json(books)
 
         } catch (error) {
-            res.status(500).json({ error: "dsfsd" })
+            res.status(500).json({ error })
         }
     } else {
         res.status(500).json({ error: "dsfffffsd" })

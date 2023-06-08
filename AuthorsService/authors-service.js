@@ -47,7 +47,7 @@ app.put('/authors/:id', async (req, res) => {
             res.json(authors)
 
         } catch (error) {
-            res.status(500).json({ error: "dsfsd" })
+            res.status(500).json({ error: "hello" })
         }
     } else {
         res.status(500).json({ error: "dsfffffsd" })
@@ -64,6 +64,6 @@ app.post('/authors', (req, res) => {
     res.json(authors)
 })
 
-app.listen(4000, () => {
-    console.log(`Server running at 4000`)
+app.listen(6000, () => {
+    console.log(`Server running at 6000`)
 })

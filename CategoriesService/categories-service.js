@@ -47,7 +47,7 @@ app.put('/categories/:id', async (req, res) => {
             res.json(categories)
 
         } catch (error) {
-            res.status(500).json({ error: "dsfsd" })
+            res.status(500).json({ error })
         }
     } else {
         res.status(500).json({ error: "dsfffffsd" })

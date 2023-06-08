@@ -1,0 +1,30 @@
+services:
+  authors:
+    build: ./AuthorsService
+    ports:
+      - 6000:6000
+    networks:
+      - my-network
+    expose:
+      - "6000"
+
+  books:
+    build: ./BooksService
+    ports:
+      - 3000:3000
+    networks:
+      - my-network
+    expose:
+      - "3000"
+
+  categories:
+    build: ./CategoriesService
+    ports:
+      - 5000:5000
+    networks:
+      - my-network
+    expose:
+      - "5000"
+
+networks:
+  my-network:
