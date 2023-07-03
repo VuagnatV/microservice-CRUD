@@ -54,6 +54,30 @@ app.put('/authors/:id', async (req, res) => {
     }
 })
 
+app.delete('/authors/:id', async (req, res) => {
+    const id = parseInt(req.params.id);
+    const index = authors.findIndex((author) => author.id === id);
+    if (index !== -1) {
+        authors.splice(index, 1);
+        const response = await axios.get(`http://books:3000/books`)
+        const books = response.data
+        console.log(books)
+        books.forEach(async (book) => {
+            if (book.authorId == id) {
+                await axios.put(`http://books:3000/books/${book.id}`, {
+                    id: book.id,
+                    tittle: book.tittle,
+                    authorId: null,
+                    categoryId: book.categoryId
+                })
+            }
+        });
+        res.json({ status: "succes" })
+    } else {
+        res.status(404).json({ error: "not found" })
+    }
+})
+
 app.post('/authors', (req, res) => {
     console.log(req.body)
     const newAuthor = {

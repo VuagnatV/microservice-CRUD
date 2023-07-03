@@ -29,6 +29,30 @@ app.get('/categories/:id', async (req, res) => {
     }
 })
 
+app.delete('/categories/:id', async (req, res) => {
+    const id = parseInt(req.params.id);
+    const index = categories.findIndex((category) => category.id === id);
+    if (index !== -1) {
+        categories.splice(index, 1);
+        const response = await axios.get(`http://books:3000/books`)
+        const books = response.data
+        console.log(books)
+        books.forEach(async (book) => {
+            if (book.categoryId == id) {
+                await axios.put(`http://books:3000/books/${book.id}`, {
+                    id: book.id,
+                    tittle: book.tittle,
+                    authorId: book.authorId,
+                    categoryId: null
+                })
+            }
+        });
+        res.json({ status: "succes" })
+    } else {
+        res.status(404).json({ error: "not found" })
+    }
+})
+
 app.put('/categories/:id', async (req, res) => {
     const id = parseInt(req.params.id)
     const index = categories.findIndex(category => category.id === id)
